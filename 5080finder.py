@@ -14,7 +14,7 @@ arr = ["https://www.canadacomputers.com/en/search?s=5080&pickup=15","https://www
 
 
 # Discord Webhook URL (Replace with your actual webhook)
-WEBHOOK_URL = "https://discord.com/api/webhooks/1338597731601617050/G9wwMQSLGjwGMnlbmGH9KtowU6zZrQGfo8Vg_Udn9wqs0BSJqOgWRE1SvtxKLbAc-Bqu"
+WEBHOOK_URL = ""
 
 # Headers to mimic a browser request (prevents bot detection)
 HEADERS = {
