@@ -3,10 +3,13 @@ import os
 from time import sleep
 from datetime import datetime
 
-# Canada Computers RTX 5080 URL (Mississauga Store)
+# Canada Computers RTX 5080 URL (Brampton, Oakville, & Mississauga Store)
 
 
-arr = ["https://www.canadacomputers.com/en/search?s=5080&pickup=15","https://www.canadacomputers.com/en/search?s=5080&pickup=4", "https://www.canadacomputers.com/en/search?s=5080&pickup=69", "https://www.canadacomputers.com/en/search?s=5090&pickup=15","https://www.canadacomputers.com/en/search?s=5090&pickup=4", "https://www.canadacomputers.com/en/search?s=5090&pickup=69"]
+arr = ["https://www.canadacomputers.com/en/search?s=5080&pickup=15","https://www.canadacomputers.com/en/search?s=5080&pickup=4", 
+      "https://www.canadacomputers.com/en/search?s=5080&pickup=69", "https://www.canadacomputers.com/en/search?s=5090&pickup=15",
+      "https://www.canadacomputers.com/en/search?s=5090&pickup=4", "https://www.canadacomputers.com/en/search?s=5090&pickup=69"
+]
 
 
 
@@ -49,7 +52,8 @@ def sendWebhookNotification(url):
     log("📢 RTX 5080 is available! Sending Discord notification...")
     data = {
         "username": "RTX Stock Informer",
-        "content": f"🎉 The RTX 5080 is available! Check here: {url}"
+        # user ids of anyone in discord to get notified by the message
+        "content": f"🎉 <@{224336449422491649}> <@{412336577948155935}> <@{182321140889288704}> GPU available! Check here: {url}"
     }
     try:
         response = requests.post(WEBHOOK_URL, json=data, timeout=10)
