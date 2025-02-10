@@ -4,7 +4,11 @@ from time import sleep
 from datetime import datetime
 
 # Canada Computers RTX 5080 URL (Mississauga Store)
-CC_WEBSITE_URL = "https://www.canadacomputers.com/en/search?s=5080&pickup=15"
+
+
+arr = ["https://www.canadacomputers.com/en/search?s=5080&pickup=15","https://www.canadacomputers.com/en/search?s=5080&pickup=4", "https://www.canadacomputers.com/en/search?s=5080&pickup=69", "https://www.canadacomputers.com/en/search?s=5090&pickup=15","https://www.canadacomputers.com/en/search?s=5090&pickup=4", "https://www.canadacomputers.com/en/search?s=5090&pickup=69"]
+
+
 
 # Discord Webhook URL (Replace with your actual webhook)
 WEBHOOK_URL = "https://discord.com/api/webhooks/1338597731601617050/G9wwMQSLGjwGMnlbmGH9KtowU6zZrQGfo8Vg_Udn9wqs0BSJqOgWRE1SvtxKLbAc-Bqu"
@@ -23,11 +27,11 @@ def log(message):
         f.write(log_message + "\n")
 
 # Check if GPU is in stock
-def checkAvailability():
+def checkAvailability(url):
     log("🔄 Checking RTX 5080 availability...")
     try:
-        response = requests.get(CC_WEBSITE_URL, headers=HEADERS, timeout=10)
-        
+        response = requests.get(url, headers=HEADERS, timeout=10)
+
         # If response is successful, check stock status
         if response.status_code == 200:
             available = response.text.count("No matches were found for your search") != 2
@@ -41,11 +45,11 @@ def checkAvailability():
         return False
 
 # Send a Discord webhook notification
-def sendWebhookNotification():
+def sendWebhookNotification(url):
     log("📢 RTX 5080 is available! Sending Discord notification...")
     data = {
         "username": "RTX Stock Informer",
-        "content": f"🎉 The RTX 5080 is available! Check here: {CC_WEBSITE_URL}"
+        "content": f"🎉 The RTX 5080 is available! Check here: {url}"
     }
     try:
         response = requests.post(WEBHOOK_URL, json=data, timeout=10)
@@ -65,10 +69,11 @@ def RunAvailabilityChecker():
     while True:
         sleep(1)
         if seconds % 180 == 0:  # Check every 3 minutes
-            if checkAvailability():
-                sendWebhookNotification()
-                log("✅ Stock found. Exiting script.")
-                return  # Exit script after finding stock
+            for url in arr:
+                if checkAvailability(url):
+                    sendWebhookNotification(url)
+                    log("✅ Stock found. Exiting script.")
+
         seconds += 1
 
 # Run the script
